@@ -232,7 +232,7 @@ const searchQuery = ref('')
   border: 1px solid var(--color-border);
   border-radius: 999px;
   background-color: var(--color-bg);
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 4.5a5.5 5.5 0 105.5 5.5A5.507 5.507 0 0011 4.5zm0 10a4.5 4.5 0 114.5-4.5 4.505 4.505 0 01-4.5 4.5z' fill='none' stroke='%238c8579' stroke-width='1.8'/%3E%3Cpath d='M15.5 15.5l4 4' fill='none' stroke='%238c8579' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-image: url(../../public/search.svg);
   background-repeat: no-repeat;
   background-position: 12px center;
   background-size: 18px;
