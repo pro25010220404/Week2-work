@@ -1,5 +1,14 @@
 <script setup>
+import { ref, provide } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
+
+const pageSize = 5
+const currentPage = ref(1)
+
+provide('pagination', {
+  currentPage,
+  pageSize,
+})
 
 const hotPosts = [
   { title: 'Vue 3 组合式 API 入门', views: '1.2k' },

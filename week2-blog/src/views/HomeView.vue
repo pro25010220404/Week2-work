@@ -1,30 +1,39 @@
 <script setup>
+import { inject, computed } from 'vue'
 import ArticleCard from '@/components/ArticleCard.vue'
-import { member3Articles } from '@/data/articles.js'
+import Pagination from '@/components/Pagination.vue'
+import { articles } from '@/data/articles.js'
+
+const pagination = inject('pagination', { currentPage: { value: 1 }, pageSize: 5 })
+
+const paginatedArticles = computed(() => {
+  const start = (pagination.currentPage.value - 1) * pagination.pageSize
+  const end = start + pagination.pageSize
+  return articles.slice(start, end)
+})
 </script>
 
 <template>
   <div class="home-view">
-    <!-- 成员3：文章列表前 3 篇 -->
+    <!-- 文章列表 -->
     <section class="article-section">
       <h2 class="section-title">最新文章</h2>
       <div class="article-list">
         <ArticleCard
-          v-for="article in member3Articles"
+          v-for="article in paginatedArticles"
           :key="article.id"
           :article="article"
         />
       </div>
     </section>
 
-    <!-- 成员4：文章列表后 2 篇 + 分页 -->
-    <section class="article-section">
-      <div class="article-placeholder">
-        <p class="layout-placeholder__hint">成员4：文章卡片 4 ~ 5</p>
-      </div>
-      <div class="pagination-placeholder">
-        <p class="layout-placeholder__hint text-secondary">成员4：分页按钮</p>
-      </div>
+    <!-- 分页组件 -->
+    <section class="pagination-section">
+      <Pagination
+        :total="articles.length"
+        :page-size="pagination.pageSize"
+        v-model="pagination.currentPage.value"
+      />
     </section>
   </div>
 </template>
@@ -44,24 +53,5 @@ import { member3Articles } from '@/data/articles.js'
   display: flex;
   flex-direction: column;
   gap: var(--spacing-md);
-}
-
-.article-placeholder,
-.pagination-placeholder {
-  padding: var(--spacing-lg);
-  background-color: var(--color-bg-white);
-  border: 1px dashed var(--color-border);
-  border-radius: var(--border-radius);
-  text-align: center;
-}
-
-.pagination-placeholder {
-  margin-top: var(--spacing-md);
-}
-
-.layout-placeholder__hint {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-secondary);
-  margin-bottom: 0;
 }
 </style>
