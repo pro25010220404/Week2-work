@@ -1,4 +1,5 @@
 <script setup>
+import { ref } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
 
 const hotPosts = [
@@ -21,18 +22,40 @@ const friendLinks = [
   { name: 'Vite 官方文档', url: 'https://cn.vite.dev/' },
   { name: 'Element Plus', url: 'https://element-plus.org/zh-CN/' },
 ]
+
+const navItems = [
+  { name: '首页', href: '#home' },
+  { name: '文章', href: '#articles' },
+  { name: '关于', href: '#about' },
+]
+
+const searchQuery = ref('')
 </script>
 
 <template>
   <div class="main-layout">
     <header class="layout-header">
       <div class="container layout-header__inner">
-        <slot name="header">
-          <div class="layout-placeholder layout-placeholder--header">
-            <span class="layout-placeholder__logo">Logo</span>
-            <span class="layout-placeholder__hint">成员2：导航栏（首页 / 文章 / 关于 / 搜索）</span>
-          </div>
-        </slot>
+        <div class="header-brand">
+          <img class="header-brand__logo" src="/博客logo.png" alt="博客 logo" />
+          <span class="header-brand__label">Week2 Blog</span>
+        </div>
+
+        <nav class="layout-header__nav" aria-label="主导航">
+          <a v-for="item in navItems" :key="item.name" :href="item.href" class="nav-link">
+            {{ item.name }}
+          </a>
+        </nav>
+
+        <div class="layout-header__search">
+          <input
+            v-model="searchQuery"
+            type="search"
+            class="search-input"
+            placeholder="搜索文章、标签、关键词"
+            aria-label="搜索文章"
+          />
+        </div>
       </div>
     </header>
 
@@ -122,12 +145,134 @@ const friendLinks = [
   background-color: var(--color-bg-white);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--box-shadow);
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  z-index: 1000;
 }
 
 .layout-header__inner {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   height: 100%;
+  gap: var(--spacing-md);
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.header-brand__logo {
+  width: 55px;
+  height: 55px;
+  object-fit: contain;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+.header-brand__label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.layout-header__nav {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+
+.nav-link {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  position: relative;
+  padding: 4px 0;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.nav-link:focus-visible {
+  color: var(--color-primary);
+}
+
+.nav-link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -2px;
+  width: 0;
+  height: 2px;
+  background-color: var(--color-primary);
+  transition: width 0.2s ease;
+}
+
+.nav-link:hover::after,
+.nav-link:focus-visible::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  color: var(--color-primary);
+  font-weight: 600;
+}
+
+.layout-header__search {
+  display: flex;
+  align-items: center;
+}
+
+.search-input {
+  width: 220px;
+  padding: 8px 12px 8px 38px;
+  font-size: var(--font-size-sm);
+  color: var(--color-text);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  background-color: var(--color-bg);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M11 4.5a5.5 5.5 0 105.5 5.5A5.507 5.507 0 0011 4.5zm0 10a4.5 4.5 0 114.5-4.5 4.505 4.505 0 01-4.5 4.5z' fill='none' stroke='%238c8579' stroke-width='1.8'/%3E%3Cpath d='M15.5 15.5l4 4' fill='none' stroke='%238c8579' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: 12px center;
+  background-size: 18px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.search-input:hover {
+  transform: translateY(-1px);
+}
+
+.search-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 4px rgba(158, 128, 96, 0.08);
+}
+
+@media (max-width: 880px) {
+  .layout-header__inner {
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: var(--spacing-sm);
+  }
+
+  .layout-header__nav {
+    order: 3;
+    width: 100%;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: var(--spacing-md);
+    padding: var(--spacing-sm) 0;
+  }
+
+  .layout-header__search {
+    order: 2;
+    width: 100%;
+    justify-content: center;
+  }
+
+  .search-input {
+    width: min(100%, 240px);
+  }
 }
 
 .layout-placeholder {
