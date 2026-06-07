@@ -193,9 +193,21 @@ hr {
   text-align: center;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-width: 240px;
+    --content-gap: 20px;
+  }
+
+  .layout-main {
+    padding-top: var(--spacing-md);
+  }
+}
+
 @media (max-width: 768px) {
   .layout-main {
     flex-direction: column;
+    padding: var(--spacing-md);
   }
 
   .layout-sidebar {

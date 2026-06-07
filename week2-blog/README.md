@@ -1,44 +1,106 @@
-# week2-blog
+# Week2 Blog
 
-This template should help get you started developing with Vue 3 in Vite.
+一个基于 `Vue 3 + Vite + Vue Router` 的课程作业博客首页项目，用于小组协作完成博客风格页面布局。
 
-## Recommended IDE Setup
+## 项目简介
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+本项目目标是实现一个简洁的博客首页，页面主要包含：
 
-## Recommended Browser Setup
+- 顶部导航栏
+- 文章列表区
+- 右侧侧边栏
+- 分页区域
+- 页脚信息
+- 移动端响应式适配
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+整体视觉采用暖色系博客风格，适合作为前端基础布局练习和团队协作作业。
 
-## Customize configuration
+## 小组分工
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+| 成员 | 负责内容 | 主要交付 |
+| --- | --- | --- |
+| 成员1 | 项目骨架 + 公共样式 + 页脚 | 项目结构、基础布局、全局样式变量、Footer |
+| 成员2 | 导航栏 | Header / Nav 的 HTML + CSS、菜单与高亮 |
+| 成员3 | 文章列表（上 3 篇） | 文章卡片模板与前 3 条假数据 |
+| 成员4 | 文章列表（下 2 篇）+ 分页 | 后 2 篇文章与分页按钮样式 |
+| 成员5 | 侧边栏 + 响应式 + README | Aside 模块、媒体查询、项目说明文档 |
 
-## Project Setup
+## 成员5已完成内容
+
+当前已补充以下部分：
+
+- 右侧侧边栏博客模块
+  - 站点信息
+  - 热门文章
+  - 分类列表
+  - 标签云
+  - 关于 / 友链
+- 页面响应式适配
+  - 平板端优化
+  - 手机端侧边栏与头部纵向排列
+- README 项目说明文档整理
+
+## 技术栈
+
+- `Vue 3`
+- `Vite`
+- `Vue Router`
+- `Element Plus`
+- `Pinia`
+
+## 项目结构
+
+```text
+week2-blog/
+├─ src/
+│  ├─ components/      # 公共组件
+│  ├─ layouts/         # 页面布局
+│  ├─ router/          # 路由配置
+│  ├─ styles/          # 全局样式
+│  └─ views/           # 页面视图
+├─ public/
+├─ package.json
+└─ README.md
+```
+
+## 安装依赖
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+## 本地开发
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+启动后在浏览器访问：
+
+[http://localhost:5173](http://localhost:5173)
+
+## 生产构建
 
 ```sh
 npm run build
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+## 单元测试
 
 ```sh
 npm run test:unit
 ```
+
+## 页面说明
+
+当前首页为博客布局示意页面，便于各成员分模块协作开发。你可以在此基础上继续补充：
+
+- 真实文章数据
+- 搜索功能
+- 分类筛选
+- 文章详情页
+- 关于页面
+
+## 说明
+
+如果你是老师或组员查看作业效果，建议直接运行开发环境后打开首页，即可看到整体博客布局与分工模块展示效果。

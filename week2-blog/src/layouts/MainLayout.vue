@@ -1,11 +1,31 @@
 <script setup>
 import AppFooter from '@/components/AppFooter.vue'
+
+const hotPosts = [
+  { title: 'Vue 3 组合式 API 入门', views: '1.2k' },
+  { title: 'Vite 搭建博客项目实践', views: '986' },
+  { title: '前端页面响应式布局技巧', views: '854' },
+]
+
+const categories = [
+  { name: '前端开发', count: 8 },
+  { name: 'Vue 学习', count: 5 },
+  { name: '项目实战', count: 3 },
+  { name: '随笔记录', count: 2 },
+]
+
+const tags = ['Vue', 'Vite', 'JavaScript', 'CSS', '响应式', '组件化', '博客', '前端']
+
+const friendLinks = [
+  { name: 'Vue 官方文档', url: 'https://cn.vuejs.org/' },
+  { name: 'Vite 官方文档', url: 'https://cn.vite.dev/' },
+  { name: 'Element Plus', url: 'https://element-plus.org/zh-CN/' },
+]
 </script>
 
 <template>
   <div class="main-layout">
     <header class="layout-header">
-      <!-- 成员2：导航栏 Header / Nav -->
       <div class="container layout-header__inner">
         <slot name="header">
           <div class="layout-placeholder layout-placeholder--header">
@@ -22,21 +42,66 @@ import AppFooter from '@/components/AppFooter.vue'
       </main>
 
       <aside class="layout-sidebar">
-        <!-- 成员5：侧边栏 Aside -->
         <slot name="sidebar">
-          <div class="sidebar-card">
+          <section class="sidebar-card sidebar-card--highlight">
+            <h3 class="sidebar-card__title">站点信息</h3>
+            <p class="sidebar-card__desc">
+              这是一个简洁的博客首页示例，包含文章区、侧边栏和响应式布局，适合作为课程作业展示页面。
+            </p>
+            <div class="site-stats">
+              <div class="site-stats__item">
+                <strong>5</strong>
+                <span>文章</span>
+              </div>
+              <div class="site-stats__item">
+                <strong>4</strong>
+                <span>分类</span>
+              </div>
+              <div class="site-stats__item">
+                <strong>8</strong>
+                <span>标签</span>
+              </div>
+            </div>
+          </section>
+
+          <section class="sidebar-card">
             <h3 class="sidebar-card__title">热门文章</h3>
-            <p class="layout-placeholder__hint text-secondary">成员5：侧边栏内容</p>
-          </div>
-          <div class="sidebar-card">
+            <ul class="sidebar-list">
+              <li v-for="post in hotPosts" :key="post.title" class="sidebar-list__item">
+                <a href="#">{{ post.title }}</a>
+                <span class="sidebar-list__meta">{{ post.views }}</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="sidebar-card">
             <h3 class="sidebar-card__title">分类列表</h3>
-          </div>
-          <div class="sidebar-card">
+            <ul class="category-list">
+              <li v-for="category in categories" :key="category.name" class="category-list__item">
+                <a href="#">{{ category.name }}</a>
+                <span class="category-list__count">{{ category.count }}</span>
+              </li>
+            </ul>
+          </section>
+
+          <section class="sidebar-card">
             <h3 class="sidebar-card__title">标签云</h3>
-          </div>
-          <div class="sidebar-card">
-            <h3 class="sidebar-card__title">关于 / 链接</h3>
-          </div>
+            <div class="tag-cloud">
+              <a v-for="tag in tags" :key="tag" href="#" class="tag-cloud__item"># {{ tag }}</a>
+            </div>
+          </section>
+
+          <section class="sidebar-card">
+            <h3 class="sidebar-card__title">关于 / 友链</h3>
+            <p class="sidebar-card__desc">
+              成员5负责右侧栏与移动端适配，当前展示常见博客模块：站点简介、热门文章、分类、标签与友链。
+            </p>
+            <ul class="friend-links">
+              <li v-for="link in friendLinks" :key="link.name">
+                <a :href="link.url" target="_blank" rel="noopener">{{ link.name }}</a>
+              </li>
+            </ul>
+          </section>
         </slot>
       </aside>
     </div>
@@ -101,10 +166,137 @@ import AppFooter from '@/components/AppFooter.vue'
   box-shadow: var(--box-shadow);
 }
 
+.sidebar-card--highlight {
+  background: linear-gradient(180deg, #fffcf8 0%, #f8f1e8 100%);
+}
+
 .sidebar-card__title {
   font-size: var(--font-size-base);
   margin-bottom: var(--spacing-sm);
   padding-bottom: var(--spacing-sm);
   border-bottom: 1px solid var(--color-border);
+}
+
+.sidebar-card__desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.8;
+}
+
+.site-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-md);
+}
+
+.site-stats__item {
+  padding: var(--spacing-sm);
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.75);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+}
+
+.site-stats__item strong {
+  display: block;
+  font-size: 1.125rem;
+  color: var(--color-primary);
+}
+
+.site-stats__item span {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.sidebar-list,
+.category-list,
+.friend-links {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.sidebar-list__item,
+.category-list__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-sm);
+}
+
+.sidebar-list__meta,
+.category-list__count {
+  flex-shrink: 0;
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+  background-color: var(--color-bg);
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+.tag-cloud {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.tag-cloud__item {
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 12px;
+  font-size: 0.875rem;
+  color: var(--color-accent);
+  background-color: #f1f6f2;
+  border: 1px solid #d8e5db;
+  border-radius: 999px;
+  transition: all 0.2s ease;
+}
+
+.tag-cloud__item:hover {
+  color: #fff;
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.friend-links a,
+.sidebar-list a,
+.category-list a {
+  display: inline-block;
+  line-height: 1.6;
+}
+
+@media (max-width: 1024px) {
+  .layout-placeholder--header {
+    gap: var(--spacing-sm);
+  }
+
+  .layout-placeholder__hint {
+    text-align: right;
+  }
+}
+
+@media (max-width: 768px) {
+  .layout-header {
+    height: auto;
+  }
+
+  .layout-header__inner {
+    padding: var(--spacing-md) 0;
+  }
+
+  .layout-placeholder,
+  .layout-placeholder--header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .layout-placeholder__hint {
+    text-align: left;
+  }
+
+  .site-stats {
+    grid-template-columns: 1fr;
+  }
 }
 </style>
