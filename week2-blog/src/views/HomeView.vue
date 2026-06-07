@@ -1,10 +1,19 @@
+<script setup>
+import ArticleCard from '@/components/ArticleCard.vue'
+import { member3Articles } from '@/data/articles.js'
+</script>
+
 <template>
   <div class="home-view">
     <!-- 成员3：文章列表前 3 篇 -->
     <section class="article-section">
       <h2 class="section-title">最新文章</h2>
-      <div class="article-placeholder">
-        <p class="layout-placeholder__hint">成员3：文章卡片 1 ~ 3</p>
+      <div class="article-list">
+        <ArticleCard
+          v-for="article in member3Articles"
+          :key="article.id"
+          :article="article"
+        />
       </div>
     </section>
 
@@ -29,6 +38,12 @@
 
 .section-title {
   margin-bottom: var(--spacing-md);
+}
+
+.article-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
 }
 
 .article-placeholder,
