@@ -153,7 +153,7 @@ const searchQuery = ref('')
   background-color: var(--color-bg-white);
   border-bottom: 1px solid var(--color-border);
   box-shadow: var(--box-shadow);
-  position:fixed;
+  position: sticky;
   top:0;
   left:0;
   width:100%;
