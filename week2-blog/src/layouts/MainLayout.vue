@@ -1,6 +1,7 @@
 <script setup>
-import { ref, provide } from 'vue'
+import { computed, ref, provide } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
+import { articles } from '@/data/articles.js'
 
 const pageSize = 5
 const currentPage = ref(1)
@@ -10,25 +11,27 @@ provide('pagination', {
   pageSize,
 })
 
-const hotPosts = [
-  { title: 'Vue 3 组合式 API 入门', views: '1.2k' },
-  { title: 'Vite 搭建博客项目实践', views: '986' },
-  { title: '前端页面响应式布局技巧', views: '854' },
-]
+const hotPosts = [...articles]
+  .sort((a, b) => b.views - a.views)
+  .slice(0, 3)
+  .map((article) => ({ title: article.title, views: `${article.views} 阅读` }))
 
-const categories = [
-  { name: '前端开发', count: 8 },
-  { name: 'Vue 学习', count: 5 },
-  { name: '项目实战', count: 3 },
-  { name: '随笔记录', count: 2 },
-]
+const categories = computed(() => {
+  const map = new Map()
 
-const tags = ['Vue', 'Vite', 'JavaScript', 'CSS', '响应式', '组件化', '博客', '前端']
+  articles.forEach((article) => {
+    map.set(article.category, (map.get(article.category) || 0) + 1)
+  })
+
+  return Array.from(map.entries()).map(([name, count]) => ({ name, count }))
+})
+
+const tags = [...new Set(articles.flatMap((article) => article.tags))]
 
 const friendLinks = [
-  { name: 'Vue 官方文档', url: 'https://cn.vuejs.org/' },
-  { name: 'Vite 官方文档', url: 'https://cn.vite.dev/' },
-  { name: 'Element Plus', url: 'https://element-plus.org/zh-CN/' },
+  { name: '成都火锅地图', url: '#' },
+  { name: '大理骑行路线', url: '#' },
+  { name: '西湖雨天游玩清单', url: '#' },
 ]
 
 const navItems = [
@@ -77,7 +80,7 @@ const searchQuery = ref('')
           <section class="sidebar-card sidebar-card--highlight">
             <h3 class="sidebar-card__title">站点信息</h3>
             <p class="sidebar-card__desc">
-              这是一个简洁的博客首页示例，包含文章区、侧边栏和响应式布局，适合作为课程作业展示页面。
+              记录五座城市的旅行片段，从成都火锅、厦门海风，到大理骑行、西湖烟雨和西安城墙，分享旅途里的风景与心情。
             </p>
             <div class="site-stats">
               <div class="site-stats__item">
@@ -85,11 +88,11 @@ const searchQuery = ref('')
                 <span>文章</span>
               </div>
               <div class="site-stats__item">
-                <strong>4</strong>
+                <strong>1</strong>
                 <span>分类</span>
               </div>
               <div class="site-stats__item">
-                <strong>8</strong>
+                <strong>15</strong>
                 <span>标签</span>
               </div>
             </div>
@@ -125,7 +128,7 @@ const searchQuery = ref('')
           <section class="sidebar-card">
             <h3 class="sidebar-card__title">关于 / 友链</h3>
             <p class="sidebar-card__desc">
-              成员5负责右侧栏与移动端适配，当前展示常见博客模块：站点简介、热门文章、分类、标签与友链。
+              本侧边栏围绕当前旅行文章内容整理，展示热门游记、文章分类、目的地标签，以及可延伸阅读的旅行主题入口。
             </p>
             <ul class="friend-links">
               <li v-for="link in friendLinks" :key="link.name">
