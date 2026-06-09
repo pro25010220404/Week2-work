@@ -2,7 +2,7 @@
 import { ref, provide } from 'vue'
 import AppFooter from '@/components/AppFooter.vue'
 
-const pageSize = 5
+const pageSize = 5    //
 const currentPage = ref(1)
 
 provide('pagination', {
